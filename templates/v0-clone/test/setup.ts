@@ -2,6 +2,11 @@ import '@testing-library/jest-dom'
 import { vi, beforeEach, afterEach } from 'vitest'
 import React from 'react'
 
+// Make sure jest-dom matchers are available
+import { expect } from 'vitest'
+import * as matchers from '@testing-library/jest-dom/matchers'
+expect.extend(matchers)
+
 // Mock Next.js modules
 vi.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -82,7 +87,4 @@ Object.defineProperty(window, 'scrollTo', {
 })
 
 // Additional DOM setup for testing
-Object.defineProperty(document, 'body', {
-  value: document.createElement('body'),
-  writable: true,
-})
+// Remove the document.body override that was causing issues
