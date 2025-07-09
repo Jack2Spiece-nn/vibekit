@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 
 import Navbar from "@/components/navbar";
 import { ConvexClientProvider } from "@/providers/convex-provider";
+import { ErrorBoundary } from "@/components/error-boundary";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -42,8 +43,10 @@ export default function RootLayout({
         >
           <AuthProvider>
             <ConvexClientProvider>
-              <Navbar />
-              {children}
+              <ErrorBoundary>
+                <Navbar />
+                {children}
+              </ErrorBoundary>
             </ConvexClientProvider>
           </AuthProvider>
         </ThemeProvider>

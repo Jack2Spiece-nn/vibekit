@@ -49,6 +49,9 @@ export const runAgent = inngest.createFunction(
   { id: "run-agent", retries: 0, concurrency: 100 },
   { event: "vibe0/run.agent" },
   async ({ event, step }) => {
+    // Add timeout handling for Vercel free tier
+    const startTime = Date.now();
+    const TIMEOUT_WARNING_MS = 8000; // 8 seconds - warn before 10s timeout
     const {
       sessionId,
       id,
@@ -86,6 +89,19 @@ export const runAgent = inngest.createFunction(
         statusMessage: "Working on task",
       });
 
+      // Check for timeout warning
+      const checkTimeout = () => {
+        const elapsed = Date.now() - startTime;
+        if (elapsed > TIMEOUT_WARNING_MS) {
+          return fetchMutation(api.sessions.update, {
+            id,
+            status: "CUSTOM",
+            statusMessage: "⚠️ Approaching timeout limit (Vercel Free Tier)",
+          });
+        }
+        return Promise.resolve();
+      };
+
       const prompt =
         template?.systemPrompt ||
         "# GOAL\nYou are an helpful assistant that is tasked with helping the user build a NextJS app.\n" +
@@ -98,6 +114,9 @@ export const runAgent = inngest.createFunction(
         mode: "code",
         callbacks: {
           async onUpdate(message) {
+            // Check for timeout
+            await checkTimeout();
+            
             const data = JSON.parse(message);
 
             if (data.type === "user") {
