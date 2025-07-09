@@ -16,6 +16,31 @@ This template has been optimized for Vercel's **free tier** but comes with sever
 2. ✅ Added `vercel.json` configuration
 3. ✅ Optimized Next.js config for Vercel
 4. ✅ Disabled telemetry for faster builds
+5. ✅ Added timeout warnings in UI
+6. ✅ Implemented error boundaries for better error handling
+7. ✅ Optimized webpack configuration for smaller bundles
+8. ✅ Added secure AUTH_SECRET generation
+
+## 🚀 What Works on Free Tier
+
+### ✅ Fully Functional:
+- User authentication (GitHub OAuth)
+- Session management
+- Real-time UI updates
+- File browsing and basic operations
+- Template selection
+- Basic chat interface
+
+### ⚠️ Limited Functionality:
+- **AI code generation** - Will timeout after 10 seconds
+- **Complex repository operations** - May timeout
+- **Long-running tasks** - Will be interrupted
+- **Sandbox environment creation** - May fail due to timeout
+
+### 🚫 Requires Paid Services:
+- **Northflank** - Sandbox environments (requires paid account)
+- **Anthropic API** - AI functionality (requires paid API key)
+- **Convex** - Database (free tier available but limited)
 
 ## 🚀 Deploy to Vercel
 

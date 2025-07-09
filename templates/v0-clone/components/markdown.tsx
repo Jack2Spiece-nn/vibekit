@@ -224,6 +224,7 @@ const components: Partial<Components> = {
     </h6>
   ),
   img: ({ alt, src, title, ...props }) => (
+    // eslint-disable-next-line @next/next/no-img-element
     <img
       className="max-w-full h-auto my-2 rounded"
       alt={alt}
